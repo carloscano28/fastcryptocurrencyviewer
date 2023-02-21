@@ -5,45 +5,54 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fastcryptocurrencyviewer.R
+import com.example.fastcryptocurrencyviewer.databinding.FragmentAvailableBooksBinding
+import com.example.fastcryptocurrencyviewer.ui.adapters.AvailableBooksAdapter
+import com.example.fastcryptocurrencyviewer.utils.EventDevice
 
 private const val ARG_PARAM1 = "param1"
 
-class AvailableBooksFragment : Fragment() {
+class AvailableBooksFragment : Fragment(), EventDevice {
 
+    private lateinit var binding: FragmentAvailableBooksBinding
     private var param1: String? = null
+    var Lista2 = arrayOf("fdsfsd", "dsafdfs", "dsafdfs", "dsafdfs", "dsafdfs", "dsafdfs", "dsafdfs")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
         }
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_available_books, container, false)
+    ): View {
+        binding = FragmentAvailableBooksBinding.inflate(layoutInflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment AvailableBooksFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String) =
-            AvailableBooksFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        /*   ADAPTADOR    */
+        binding.rvAvailableBooks.layoutManager = LinearLayoutManager(activity)
+        val adaptador = AvailableBooksAdapter(Lista2, this)
+        binding.rvAvailableBooks.adapter = adaptador
+        /*   ADAPTADOR    */
+
+    }
+
+    override fun onClickedDevice(s: String) {
+        findNavController().navigate(
+            R.id.action_availableBooksFragment_to_detailFragment,
+            bundleOf("book" to s)
+        )
+
+
     }
 }
