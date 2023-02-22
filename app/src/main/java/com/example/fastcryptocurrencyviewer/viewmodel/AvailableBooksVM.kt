@@ -6,10 +6,11 @@ import androidx.lifecycle.viewModelScope
 import com.example.fastcryptocurrencyviewer.data.api.BitsoApiService
 import com.example.fastcryptocurrencyviewer.data.model.CryptoAvailable
 import com.example.fastcryptocurrencyviewer.data.model.CryptoAvailableResponse
-import com.example.fastcryptocurrencyviewer.utils.Utils
+import com.example.fastcryptocurrencyviewer.utils.*
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -21,23 +22,54 @@ class AvailableBooksVM (private val client: AvailableBooksClient):ViewModel() {
     val state: StateFlow<Utils.AvailableBooksUiState> = _stateAvailable
 
 
-    fun getAvailableBook() {
+    fun getAvailableBook(){
+        viewModelScope.launch(Dispatchers.IO) {
+
+            client.getCharacters().onSuccess {
+
+            }.onError{ code, message ->
+
+            }.onException {  }
+
+            _stateAvailable.value = when(val result = client.getCharacters()) {
+                is ApiSuccess -> Utils.AvailableBooksUiState(
+                    isLoading = false,
+                    characters = result.data.coins!!.filter{coin->coin.coin.contains(Utils.CryptoConstants.MXN)}
+                )
+                is ApiException -> Utils.AvailableBooksUiState(exception = result.e)
+                is ApiError -> Utils.AvailableBooksUiState(errorMessage = result.message)
+            }
+
+        }
+    }
+    fun getAvailableBookRx() {
         viewModelScope.launch {
             client.getAllCharacters()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { onSuccess, onError ->
                     onSuccess?.let {
-                        _stateAvailable.value = Utils.AvailableBooksUiState(isLoading = false, characters = it.body()?.coins!!.filter { coin-> coin.coin.contains(
-                            Utils.CryptoConstants.MXN)  } )
+                        if (it.isSuccessful){
+                            it.body()?.coins.let {
+                                if (it != null) {
+                                    _stateAvailable.value = Utils.AvailableBooksUiState(
+                                        isLoading = false,
+                                        characters = it
+                                            .filter{coin->coin.coin.contains(
+                                                Utils.CryptoConstants.MXN)
+                                            }
+                                    )
+                                }
+                            }
+
+                        }
+
                     }
 
                     onError?.let{
                         _stateAvailable.value = Utils.AvailableBooksUiState(isLoading = false, characters = emptyList() )
                     }
                 }
-
-
         }
     }
 }
@@ -51,6 +83,8 @@ class AvailableBooksVMFactory(private val myClient: AvailableBooksClient): ViewM
 
 class AvailableBooksClient(private val apiService: BitsoApiService) {
 
+    suspend fun getCharacters(): NetworkResult<CryptoAvailableResponse> =
+        handleApi { apiService.getAvailableBooks() }
     fun getAllCharacters(): Single<Response<CryptoAvailableResponse>> = apiService.getExchangeBooksRx()
 
 }

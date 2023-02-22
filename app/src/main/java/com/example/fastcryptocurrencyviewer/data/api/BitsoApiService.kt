@@ -26,6 +26,9 @@ interface BitsoApiService {
 
     @GET(CryptoEndPoints.AVAILABLE_BOOKS)
     fun getExchangeBooksRx(): Single<Response<CryptoAvailableResponse>>
+
+    @GET(CryptoEndPoints.AVAILABLE_BOOKS)
+    suspend fun getAvailableBooks(): Response<CryptoAvailableResponse>
 }
 
 object RetrofitSingleton {
