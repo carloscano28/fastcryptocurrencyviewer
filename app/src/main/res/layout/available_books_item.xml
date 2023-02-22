@@ -7,58 +7,75 @@
     android:padding="10dp"
     >
 
-    <TextView
-        android:id="@+id/crypto_order_book"
-        android:layout_width="0dp"
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:background="?attr/selectableItemBackground"
-        app:layout_constraintBottom_toBottomOf="@id/tvTitleAmount"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tvTitlePrice"
-        tools:text="Item Book" />
-
-    <TextView
-        android:id="@+id/tvTitlePrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:text="@string/price"
-        app:layout_constraintBottom_toTopOf="@id/tvTitleAmount"
-        app:layout_constraintStart_toEndOf="@id/crypto_order_book"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Price" />
-
-    <TextView
-        android:id="@+id/crypto_order_price"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:background="?attr/selectableItemBackground"
-        app:layout_constraintBottom_toBottomOf="@id/tvTitlePrice"
-        app:layout_constraintStart_toEndOf="@id/tvTitlePrice"
-        app:layout_constraintTop_toTopOf="@id/tvTitlePrice"
-        tools:text="0.02248087" />
-
-    <TextView
-        android:id="@+id/tvTitleAmount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/amount"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/tvTitlePrice"
-        app:layout_constraintTop_toBottomOf="@id/tvTitlePrice"
-        tools:text="Amount" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/crypto_order_amount"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:background="?attr/selectableItemBackground"
-        app:layout_constraintBottom_toBottomOf="@id/tvTitleAmount"
-        app:layout_constraintStart_toEndOf="@id/tvTitleAmount"
-        app:layout_constraintTop_toTopOf="@id/tvTitleAmount"
-        tools:text="378140" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/crypto_order_book"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:background="?attr/selectableItemBackground"
+                app:layout_constraintBottom_toBottomOf="@id/tvTitleAmount"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvTitlePrice"
+                tools:text="Item Book" />
+
+            <TextView
+                android:id="@+id/tvTitlePrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="@string/price"
+                app:layout_constraintBottom_toTopOf="@id/tvTitleAmount"
+                app:layout_constraintStart_toEndOf="@id/crypto_order_book"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Price" />
+
+            <TextView
+                android:id="@+id/crypto_order_price"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:background="?attr/selectableItemBackground"
+                app:layout_constraintBottom_toBottomOf="@id/tvTitlePrice"
+                app:layout_constraintStart_toEndOf="@id/tvTitlePrice"
+                app:layout_constraintTop_toTopOf="@id/tvTitlePrice"
+                tools:text="0.02248087" />
+
+            <TextView
+                android:id="@+id/tvTitleAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/amount"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tvTitlePrice"
+                app:layout_constraintTop_toBottomOf="@id/tvTitlePrice"
+                tools:text="Amount" />
+
+            <TextView
+                android:id="@+id/crypto_order_amount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:background="?attr/selectableItemBackground"
+                app:layout_constraintBottom_toBottomOf="@id/tvTitleAmount"
+                app:layout_constraintStart_toEndOf="@id/tvTitleAmount"
+                app:layout_constraintTop_toTopOf="@id/tvTitleAmount"
+                tools:text="378140" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
