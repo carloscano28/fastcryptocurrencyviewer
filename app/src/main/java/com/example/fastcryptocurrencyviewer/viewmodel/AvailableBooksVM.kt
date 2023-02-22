@@ -42,36 +42,6 @@ class AvailableBooksVM (private val client: AvailableBooksClient):ViewModel() {
 
         }
     }
-    fun getAvailableBookRx() {
-        viewModelScope.launch {
-            client.getAllCharacters()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { onSuccess, onError ->
-                    onSuccess?.let {
-                        if (it.isSuccessful){
-                            it.body()?.coins.let {
-                                if (it != null) {
-                                    _stateAvailable.value = Utils.AvailableBooksUiState(
-                                        isLoading = false,
-                                        characters = it
-                                            .filter{coin->coin.coin.contains(
-                                                Utils.CryptoConstants.MXN)
-                                            }
-                                    )
-                                }
-                            }
-
-                        }
-
-                    }
-
-                    onError?.let{
-                        _stateAvailable.value = Utils.AvailableBooksUiState(isLoading = false, characters = emptyList() )
-                    }
-                }
-        }
-    }
 }
 
 class AvailableBooksVMFactory(private val myClient: AvailableBooksClient): ViewModelProvider.Factory {
@@ -85,6 +55,4 @@ class AvailableBooksClient(private val apiService: BitsoApiService) {
 
     suspend fun getCharacters(): NetworkResult<CryptoAvailableResponse> =
         handleApi { apiService.getAvailableBooks() }
-    fun getAllCharacters(): Single<Response<CryptoAvailableResponse>> = apiService.getExchangeBooksRx()
-
 }

@@ -14,19 +14,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface BitsoApiService {
-    //@GET(CryptoEndPoints.TICKER_BOOK)
-    /*suspend fun getTickerBook(
-        @Query("book") book: String
-    ): CryptoTickerResponse*/
-
-    //@GET(CryptoEndPoints.ORDER_SPECIFIED_BOOK)
-    /*suspend fun getOrderBook(
-        @Query("book") book: String
-    ): CryptoOrderResponse*/
-
-    @GET(CryptoEndPoints.AVAILABLE_BOOKS)
-    fun getExchangeBooksRx(): Single<Response<CryptoAvailableResponse>>
-
+    
     @GET(CryptoEndPoints.AVAILABLE_BOOKS)
     suspend fun getAvailableBooks(): Response<CryptoAvailableResponse>
 }
