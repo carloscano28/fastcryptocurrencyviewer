@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.fastcryptocurrencyviewer.data.api.BitsoApiService
-import com.example.fastcryptocurrencyviewer.data.model.CryptoAvailable
 import com.example.fastcryptocurrencyviewer.data.model.CryptoAvailableResponse
 import com.example.fastcryptocurrencyviewer.utils.Utils
 import io.reactivex.Single
@@ -28,8 +27,21 @@ class AvailableBooksVM (private val client: AvailableBooksClient):ViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { onSuccess, onError ->
                     onSuccess?.let {
-                        _stateAvailable.value = Utils.AvailableBooksUiState(isLoading = false, characters = it.body()?.coins!!.filter { coin-> coin.coin.contains(
-                            Utils.CryptoConstants.MXN)  } )
+                        if (it.isSuccessful){
+                            it.body()?.coins.let {
+                                if (it != null) {
+                                    _stateAvailable.value = Utils.AvailableBooksUiState(
+                                        isLoading = false,
+                                        characters = it
+                                            .filter{coin->coin.coin.contains(
+                                                Utils.CryptoConstants.MXN)
+                                            }
+                                    )
+                                }
+                            }
+
+                        }
+
                     }
 
                     onError?.let{
@@ -50,7 +62,5 @@ class AvailableBooksVMFactory(private val myClient: AvailableBooksClient): ViewM
 
 
 class AvailableBooksClient(private val apiService: BitsoApiService) {
-
     fun getAllCharacters(): Single<Response<CryptoAvailableResponse>> = apiService.getExchangeBooksRx()
-
 }

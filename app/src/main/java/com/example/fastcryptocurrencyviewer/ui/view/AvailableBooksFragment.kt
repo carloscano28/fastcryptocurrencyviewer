@@ -26,8 +26,6 @@ class AvailableBooksFragment : Fragment() {
 
     private lateinit var binding: FragmentAvailableBooksBinding
 
-    var ListaAux = arrayOf("fdsfsd", "dsafdfs", "dsafdfs", "dsafdfs", "dsafdfs", "dsafdfs", "dsafdfs")
-
     private val availableBooksVM by viewModels<AvailableBooksVM> {
         AvailableBooksVMFactory(
             AvailableBooksClient(RetrofitSingleton.retrofit.create(
@@ -46,36 +44,25 @@ class AvailableBooksFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         availableBooksVM.getAvailableBook()
         viewLifecycleOwner.lifecycleScope.launch {
-
             availableBooksVM.state.collect{
-
                 /*repeat(50){
-
                     delay(5000)
                 }*/
-
                 val adaptador = AvailableBooksAdapter(it.characters){
                     findNavController().navigate(
                         R.id.action_availableBooksFragment_to_detailFragment,
                         bundleOf("book" to it)
                     )
                 }
-
                 binding.rvAvailableBooks.layoutManager = LinearLayoutManager(activity)
                 binding.rvAvailableBooks.adapter = adaptador
-
                 binding.progressBar.isVisible = it.isLoading
-
                 if (!it.errorMessage.isNullOrEmpty()) {
                     Utils.errorDialog(requireContext(), it.errorMessage)
                 }
-
             }
-
         }
-
     }
 }
