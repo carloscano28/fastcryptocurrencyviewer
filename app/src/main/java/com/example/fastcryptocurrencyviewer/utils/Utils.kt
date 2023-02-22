@@ -8,9 +8,6 @@ import com.example.fastcryptocurrencyviewer.data.model.CryptoAvailableResponse
 object Utils {
 
     var dialog: AlertDialog? = null
-    interface EventDevice {
-        fun onClickedDevice(s: String)
-    }
 
     class CryptoConstants {
         companion object {

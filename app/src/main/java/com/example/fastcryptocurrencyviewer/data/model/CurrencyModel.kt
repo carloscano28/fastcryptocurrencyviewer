@@ -1,5 +1,6 @@
 package com.example.fastcryptocurrencyviewer.data.model
 
+import android.os.Parcel
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
@@ -14,7 +15,7 @@ data class CryptoM(
 ) : Parcelable
 
 
-/*data class CryptoBookDTO(
+data class CryptoBookDTO(
     val book: String = "",
     val minPrice: String = "",
     val maxPrice: String = "",
@@ -27,4 +28,27 @@ data class CryptoM(
         parcel.readString() ?: "",
         parcel.readInt(),
         parcel.readString() ?: ""
-    )*/
+    )
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(book)
+        parcel.writeString(minPrice)
+        parcel.writeString(maxPrice)
+        parcel.writeInt(logo)
+        parcel.writeString(name)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<CryptoBookDTO> {
+        override fun createFromParcel(parcel: Parcel): CryptoBookDTO {
+            return CryptoBookDTO(parcel)
+        }
+
+        override fun newArray(size: Int): Array<CryptoBookDTO?> {
+            return arrayOfNulls(size)
+        }
+    }
+}

@@ -5,10 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.fastcryptocurrencyviewer.R
 import com.example.fastcryptocurrencyviewer.data.api.BitsoApiService
 import com.example.fastcryptocurrencyviewer.data.api.RetrofitSingleton
 import com.example.fastcryptocurrencyviewer.databinding.FragmentAvailableBooksBinding
@@ -19,13 +22,10 @@ import com.example.fastcryptocurrencyviewer.viewmodel.AvailableBooksVM
 import com.example.fastcryptocurrencyviewer.viewmodel.AvailableBooksVMFactory
 import kotlinx.coroutines.launch
 
-private const val ARG_PARAM1 = "param1"
-
 class AvailableBooksFragment : Fragment() {
-//class AvailableBooksFragment : Fragment(), Utils.EventDevice {
 
     private lateinit var binding: FragmentAvailableBooksBinding
-    private var param1: String? = null
+
     var ListaAux = arrayOf("fdsfsd", "dsafdfs", "dsafdfs", "dsafdfs", "dsafdfs", "dsafdfs", "dsafdfs")
 
     private val availableBooksVM by viewModels<AvailableBooksVM> {
@@ -33,14 +33,6 @@ class AvailableBooksFragment : Fragment() {
             AvailableBooksClient(RetrofitSingleton.retrofit.create(
             BitsoApiService::class.java))
         )
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-        }
-
     }
 
     override fun onCreateView(
@@ -53,16 +45,9 @@ class AvailableBooksFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        /*   ADAPTADOR    */
-        //binding.rvAvailableBooks.layoutManager = LinearLayoutManager(activity)
-        //val adaptador = AvailableBooksAdapter(Lista2, this)
-        //binding.rvAvailableBooks.adapter = adaptador
-        /*   ADAPTADOR    */
-
 
 
         availableBooksVM.getAvailableBook()
-
         viewLifecycleOwner.lifecycleScope.launch {
 
             availableBooksVM.state.collect{
@@ -72,7 +57,13 @@ class AvailableBooksFragment : Fragment() {
                     delay(5000)
                 }*/
 
-                val adaptador = AvailableBooksAdapter(it.characters)
+                val adaptador = AvailableBooksAdapter(it.characters){
+                    findNavController().navigate(
+                        R.id.action_availableBooksFragment_to_detailFragment,
+                        bundleOf("book" to it)
+                    )
+                }
+
                 binding.rvAvailableBooks.layoutManager = LinearLayoutManager(activity)
                 binding.rvAvailableBooks.adapter = adaptador
 
@@ -82,20 +73,9 @@ class AvailableBooksFragment : Fragment() {
                     Utils.errorDialog(requireContext(), it.errorMessage)
                 }
 
-
-
             }
 
         }
 
     }
-
-    /*override fun onClickedDevice(s: String) {
-        findNavController().navigate(
-            R.id.action_availableBooksFragment_to_detailFragment,
-            bundleOf("book" to s)
-        )
-
-
-    }*/
 }
