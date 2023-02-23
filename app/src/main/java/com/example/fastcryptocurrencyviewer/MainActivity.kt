@@ -5,6 +5,9 @@ import android.os.Bundle
 import com.example.fastcryptocurrencyviewer.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ *  Inyeccion de dependencias con Hilt y arquitectura limpia
+ */
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
