@@ -27,6 +27,7 @@ class AvailableBooksVM @Inject constructor(private val availableBooksUseCase: Av
     fun getAvailableBookInvoke(){
         viewModelScope.launch {
             val result = availableBooksUseCase.invoke()
+            _stateAvailableLD.value = Utils.AvailableBooksUiState(isLoading = false, characters = result )
             _stateAvailable.update {
                 Utils.AvailableBooksUiState(isLoading = false, characters = result )
             }
