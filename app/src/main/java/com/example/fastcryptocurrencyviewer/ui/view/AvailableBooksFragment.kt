@@ -26,6 +26,7 @@ class AvailableBooksFragment : Fragment() {
 
     private lateinit var binding: FragmentAvailableBooksBinding
 
+    // Inyeccion de dependencias manual (patron factory)
     private val availableBooksVM by viewModels<AvailableBooksVM> {
         AvailableBooksVMFactory(
             AvailableBooksUseCase(AvailableBooksRepoImpl(
