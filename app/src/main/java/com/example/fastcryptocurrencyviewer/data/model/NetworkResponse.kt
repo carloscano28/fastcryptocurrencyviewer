@@ -5,56 +5,42 @@ import com.google.gson.annotations.SerializedName
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
-
-
-@JsonClass(generateAdapter = true)
-data class CryptoAvailableResponseMoshi(
-    @Json(name = "name")
-    val name: String,
-    @Json(name = "url")
-    val url: String
-)
-
 data class CryptoAvailableResponse(
     @SerializedName("success")
     @Expose
     val success: Boolean = false,
-
     @SerializedName("payload")
     @Expose
-    val coins: List<CryptoAvailable>? = null
+    val coins: List<CryptoAvailable>? = emptyList()
+)
+
+fun CryptoAvailableResponse.asExternalModelView() = AvailableBooks(
+    coins = coins
 )
 
 data class CryptoAvailable(
     @SerializedName("book")
     @Expose
     val coin: String = "",
-
     @SerializedName("minimum_amount")
     @Expose
     val minAmount: String = "",
-
     @SerializedName("maximum_amount")
     @Expose
     val maxAmount: String = "",
-
     @SerializedName("minimum_price")
     @Expose
     val minPrice: String = "",
-
     @SerializedName("maximum_price")
     @Expose
     val maxPrice: String = "",
-
     @SerializedName("minimum_value")
     @Expose
     val minValue: String = "",
-
     @SerializedName("maximum_value")
     @Expose
     val maxValue: String = ""
 ) {
-    //fun returnTxt () : String =  " My txt "
     /*fun toBook(): CryptoBookDTO =
         when (coin) {
             Utils.CoinType.BITCOIN.value -> CryptoBookDTO(
@@ -130,3 +116,11 @@ data class CryptoAvailable(
             else -> CryptoBookDTO()
         }*/
 }
+
+@JsonClass(generateAdapter = true)
+data class CryptoAvailableResponseMoshi(
+    @Json(name = "name")
+    val name: String,
+    @Json(name = "url")
+    val url: String
+)

@@ -12,12 +12,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fastcryptocurrencyviewer.R
-import com.example.fastcryptocurrencyviewer.data.api.BitsoApiService
-import com.example.fastcryptocurrencyviewer.data.api.RetrofitSingleton
+import com.example.fastcryptocurrencyviewer.data.network.RetrofitClientImpl
 import com.example.fastcryptocurrencyviewer.databinding.FragmentAvailableBooksBinding
+import com.example.fastcryptocurrencyviewer.domain.AvailableBooksUseCase
+import com.example.fastcryptocurrencyviewer.repository.AvailableBooksRepoImpl
 import com.example.fastcryptocurrencyviewer.ui.adapters.AvailableBooksAdapter
 import com.example.fastcryptocurrencyviewer.utils.Utils
-import com.example.fastcryptocurrencyviewer.viewmodel.AvailableBooksClient
 import com.example.fastcryptocurrencyviewer.viewmodel.AvailableBooksVM
 import com.example.fastcryptocurrencyviewer.viewmodel.AvailableBooksVMFactory
 import kotlinx.coroutines.launch
@@ -28,8 +28,9 @@ class AvailableBooksFragment : Fragment() {
 
     private val availableBooksVM by viewModels<AvailableBooksVM> {
         AvailableBooksVMFactory(
-            AvailableBooksClient(RetrofitSingleton.retrofit.create(
-            BitsoApiService::class.java))
+            AvailableBooksUseCase(AvailableBooksRepoImpl(
+                RetrofitClientImpl()
+            ))
         )
     }
 
@@ -44,13 +45,15 @@ class AvailableBooksFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        availableBooksVM.getAvailableBook()
+        availableBooksVM.getAvailableBookInvoke()
+
+        availableBooksVM.stateAvailableLD.observe(viewLifecycleOwner){
+            //binding.rvAvailableBooks
+        }
+
         viewLifecycleOwner.lifecycleScope.launch {
 
             availableBooksVM.state.collect{
-                /*repeat(50){
-                    delay(5000)
-                }*/
                 val adaptador = AvailableBooksAdapter(it.characters){
                     findNavController().navigate(
                         R.id.action_availableBooksFragment_to_detailFragment,

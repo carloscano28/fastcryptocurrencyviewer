@@ -9,26 +9,14 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
-import retrofit2.http.Query
 
 interface BitsoApiService {
-    //@GET(CryptoEndPoints.TICKER_BOOK)
-    /*suspend fun getTickerBook(
-        @Query("book") book: String
-    ): CryptoTickerResponse*/
-
-    //@GET(CryptoEndPoints.ORDER_SPECIFIED_BOOK)
-    /*suspend fun getOrderBook(
-        @Query("book") book: String
-    ): CryptoOrderResponse*/
-
     @GET(CryptoEndPoints.AVAILABLE_BOOKS)
     fun getExchangeBooksRx(): Single<Response<CryptoAvailableResponse>>
 
     @GET(CryptoEndPoints.AVAILABLE_BOOKS)
-    suspend fun getAvailableBooks(): Response<CryptoAvailableResponse>
+    suspend fun getAvailableBooks(): CryptoAvailableResponse
 }
 
 object RetrofitSingleton {
