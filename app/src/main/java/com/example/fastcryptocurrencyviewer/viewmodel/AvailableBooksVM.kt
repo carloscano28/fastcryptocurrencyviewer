@@ -9,6 +9,7 @@ import com.example.fastcryptocurrencyviewer.domain.AvailableBooksUseCase
 import com.example.fastcryptocurrencyviewer.utils.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class AvailableBooksVM (private val availableBooksUseCase: AvailableBooksUseCase):ViewModel() {
@@ -24,7 +25,9 @@ class AvailableBooksVM (private val availableBooksUseCase: AvailableBooksUseCase
     fun getAvailableBookInvoke(){
         viewModelScope.launch {
             val result = availableBooksUseCase.invoke()
-            _stateAvailable.value = Utils.AvailableBooksUiState(isLoading = false, characters = result )
+            _stateAvailable.update {
+                Utils.AvailableBooksUiState(isLoading = false, characters = result )
+            }
         }
     }
 }
