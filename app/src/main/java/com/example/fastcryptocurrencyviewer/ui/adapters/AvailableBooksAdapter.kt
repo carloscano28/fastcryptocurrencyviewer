@@ -11,11 +11,9 @@ import com.example.fastcryptocurrencyviewer.databinding.AvailableBooksItemBindin
 class AvailableBooksAdapter(private val dataSet: List<CryptoAvailable>, private val click: (String) -> Unit) :
     RecyclerView.Adapter<AvailableBooksAdapter.ViewHolder>() {
 
-
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.available_books_item, viewGroup, false)
-
         return ViewHolder(view)
     }
 
@@ -23,29 +21,21 @@ class AvailableBooksAdapter(private val dataSet: List<CryptoAvailable>, private 
         viewHolder.linkItem(dataSet, click)
     }
 
-
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-
         private var binding = AvailableBooksItemBinding.bind(view)
-
-
         init {
 
         }
 
         fun linkItem(dataSet: List<CryptoAvailable>, click: (String) -> Unit){
-
             with(binding){
                 cryptoOrderBook.text = dataSet[adapterPosition].coin
                 cardItem.setOnClickListener {
                     click.invoke(dataSet[adapterPosition].coin)
                 }
-
             }
-
         }
-
     }
 
     override fun getItemCount() = dataSet.size

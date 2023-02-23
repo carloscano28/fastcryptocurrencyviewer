@@ -118,7 +118,7 @@ data class CryptoAvailable(
 }
 
 @JsonClass(generateAdapter = true)
-data class CryptoAvailableResponseMoshi(
+data class ResponseMoshi(
     @Json(name = "name")
     val name: String,
     @Json(name = "url")

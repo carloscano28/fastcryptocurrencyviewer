@@ -1,18 +1,20 @@
-package com.example.fastcryptocurrencyviewer.viewmodel
+package com.example.fastcryptocurrencyviewer.ui.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.fastcryptocurrencyviewer.domain.AvailableBooksUseCase
+import com.example.fastcryptocurrencyviewer.data.domain.AvailableBooksUseCase
 import com.example.fastcryptocurrencyviewer.utils.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class AvailableBooksVM (private val availableBooksUseCase: AvailableBooksUseCase):ViewModel() {
+@HiltViewModel
+class AvailableBooksVM @Inject constructor(private val availableBooksUseCase: AvailableBooksUseCase):ViewModel() {
 
     // VARIABLES LIVE DATA
     private val _stateAvailableLD = MutableLiveData<Utils.AvailableBooksUiState>()
@@ -29,11 +31,5 @@ class AvailableBooksVM (private val availableBooksUseCase: AvailableBooksUseCase
                 Utils.AvailableBooksUiState(isLoading = false, characters = result )
             }
         }
-    }
-}
-
-class AvailableBooksVMFactory(private val availableBooksUseCase: AvailableBooksUseCase): ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return modelClass.getConstructor(AvailableBooksUseCase::class.java).newInstance(availableBooksUseCase)
     }
 }

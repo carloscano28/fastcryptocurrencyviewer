@@ -19,22 +19,6 @@ interface BitsoApiService {
     suspend fun getAvailableBooks(): CryptoAvailableResponse
 }
 
-object RetrofitSingleton {
-
-    private val okHttpClient = OkHttpClient.Builder()
-        .addInterceptor(HttpLoggingInterceptor().also { it.setLevel(HttpLoggingInterceptor.Level.BODY) })
-        .build()
-
-    val retrofit: Retrofit = Retrofit.Builder()
-        .client(okHttpClient)
-        .baseUrl(Utils.CryptoConstants.BITSO_URL)
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-        .addConverterFactory(GsonConverterFactory.create())
-        //.addConverterFactory(MoshiConverterFactory.create())
-        .build()
-
-}
-
 object CryptoEndPoints {
     const val AVAILABLE_BOOKS =
         "available_books/"

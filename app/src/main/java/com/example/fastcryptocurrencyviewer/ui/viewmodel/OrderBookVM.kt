@@ -1,4 +1,4 @@
-package com.example.fastcryptocurrencyviewer.viewmodel
+package com.example.fastcryptocurrencyviewer.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 

@@ -5,10 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.fastcryptocurrencyviewer.R
-import com.example.fastcryptocurrencyviewer.databinding.FragmentAvailableBooksBinding
 import com.example.fastcryptocurrencyviewer.databinding.FragmentDetailBinding
-
 
 private const val ARG_PARAM1 = "book"
 
