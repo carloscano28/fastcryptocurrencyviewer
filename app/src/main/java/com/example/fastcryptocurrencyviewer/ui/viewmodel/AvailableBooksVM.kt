@@ -20,17 +20,10 @@ class AvailableBooksVM @Inject constructor(private val availableBooksUseCase: Av
     private val _stateAvailableLD = MutableLiveData<Utils.AvailableBooksUiState>()
     val stateAvailableLD: LiveData<Utils.AvailableBooksUiState> = _stateAvailableLD
 
-    // VARIABLES STATE FLOW
-    private val _stateAvailable = MutableStateFlow(Utils.AvailableBooksUiState(isLoading = true))
-    val state: StateFlow<Utils.AvailableBooksUiState> = _stateAvailable
-
     fun getAvailableBookInvoke(){
         viewModelScope.launch {
             val result = availableBooksUseCase.invoke()
             _stateAvailableLD.value = Utils.AvailableBooksUiState(isLoading = false, characters = result )
-            _stateAvailable.update {
-                Utils.AvailableBooksUiState(isLoading = false, characters = result )
-            }
         }
     }
 }

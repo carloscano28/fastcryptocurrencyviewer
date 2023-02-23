@@ -39,28 +39,8 @@ class AvailableBooksFragment : Fragment() {
         availableBooksVM.getAvailableBookInvoke()
 
         viewLifecycleOwner.lifecycleScope.launch {
-        availableBooksVM.stateAvailableLD.observe(viewLifecycleOwner) {
-            val adaptador = AvailableBooksAdapter(it.characters) {
-                findNavController().navigate(
-                    R.id.action_availableBooksFragment_to_detailFragment,
-                    bundleOf("book" to it)
-                )
-            }
-            binding.rvAvailableBooks.layoutManager = LinearLayoutManager(activity)
-            binding.rvAvailableBooks.adapter = adaptador
-            binding.progressBar.isVisible = it.isLoading
-
-            if (!it.errorMessage.isNullOrEmpty()) {
-                Utils.errorDialog(requireContext(), it.errorMessage)
-            }
-
-        }
-    }
-
-        /*viewLifecycleOwner.lifecycleScope.launch {
-
-            availableBooksVM.state.collect{
-                val adaptador = AvailableBooksAdapter(it.characters){
+            availableBooksVM.stateAvailableLD.observe(viewLifecycleOwner) {
+                val adaptador = AvailableBooksAdapter(it.characters) {
                     findNavController().navigate(
                         R.id.action_availableBooksFragment_to_detailFragment,
                         bundleOf("book" to it)
@@ -74,6 +54,6 @@ class AvailableBooksFragment : Fragment() {
                     Utils.errorDialog(requireContext(), it.errorMessage)
                 }
             }
-        }*/
+        }
     }
 }
