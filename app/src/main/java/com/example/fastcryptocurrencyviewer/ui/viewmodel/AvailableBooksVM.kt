@@ -14,6 +14,26 @@ class AvailableBooksVM @Inject constructor(private val availableBooksUseCase: Av
     private val _stateAvailableLD = MutableLiveData<Utils.AvailableBooksUiState>()
     val stateAvailableLD: LiveData<Utils.AvailableBooksUiState> = _stateAvailableLD
 
+    fun getAvailableBookLiveData() = liveData(viewModelScope.coroutineContext + Dispatchers.Main){
+
+        try {
+            emit(
+                Utils
+                    .AvailableBooksUiState(
+                        isLoading = false,
+                        characters = availableBooksUseCase.invoke()
+                    )
+            )
+        }catch (e:Exception){
+            emit(
+                Utils
+                    .AvailableBooksUiState(
+                        exception = e
+                    )
+            )
+        }
+    }
+
     /*fun getAvailableBookInvoke(){
         viewModelScope.launch {
             val result = availableBooksUseCase.invoke()
@@ -21,13 +41,4 @@ class AvailableBooksVM @Inject constructor(private val availableBooksUseCase: Av
         }
     }*/
 
-    fun getAvailableBookLiveData() = liveData(viewModelScope.coroutineContext + Dispatchers.Main){
-        emit(
-            Utils
-            .AvailableBooksUiState(
-                isLoading = false,
-                characters = availableBooksUseCase.invoke()
-            )
-        )
-    }
 }
