@@ -1,4 +1,4 @@
-package com.example.fastcryptocurrencyviewer.data.domain
+package com.example.fastcryptocurrencyviewer.domain
 
 import com.example.fastcryptocurrencyviewer.data.model.CryptoAvailable
 import com.example.fastcryptocurrencyviewer.data.model.asExternalModelView

@@ -1,10 +1,8 @@
 package com.example.fastcryptocurrencyviewer.ui.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.fastcryptocurrencyviewer.data.domain.AvailableBooksUseCase
+import com.example.fastcryptocurrencyviewer.domain.AvailableBooksUseCase
 import com.example.fastcryptocurrencyviewer.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

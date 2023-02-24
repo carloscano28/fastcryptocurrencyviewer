@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 class AvailableBooksFragment : Fragment() {
 
     private lateinit var binding: FragmentAvailableBooksBinding
-    private val availableBooksVM :AvailableBooksVM by viewModels()
+    private val availableBooksVM :AvailableBooksVM by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
