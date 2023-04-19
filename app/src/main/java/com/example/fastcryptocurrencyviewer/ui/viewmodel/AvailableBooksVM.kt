@@ -11,24 +11,22 @@ import javax.inject.Inject
 class AvailableBooksVM @Inject constructor(private val availableBooksUseCase: AvailableBooksUseCase):ViewModel() {
 
     // VARIABLES LIVE DATA
-    private val _stateAvailableLD = MutableLiveData<Utils.AvailableBooksUiState>()
-    val stateAvailableLD: LiveData<Utils.AvailableBooksUiState> = _stateAvailableLD
+    private val _stateAvailableLD = MutableLiveData<AvailableBooksUiState>()
+    val stateAvailableLD: LiveData<AvailableBooksUiState> = _stateAvailableLD
 
     fun getAvailableBookLiveData() = liveData(viewModelScope.coroutineContext + Dispatchers.Main){
 
         try {
             emit(
-                Utils
-                    .AvailableBooksUiState(
+                AvailableBooksUiState(
                         isLoading = false,
-                        characters = availableBooksUseCase.invoke()
+                        characters = availableBooksUseCase()
                     )
             )
         }catch (e:Exception){
             emit(
-                Utils
-                    .AvailableBooksUiState(
-                        exception = e
+                AvailableBooksUiState(
+                        errorMessage = e.localizedMessage ?: Utils.CryptoConstants.ERROR
                     )
             )
         }

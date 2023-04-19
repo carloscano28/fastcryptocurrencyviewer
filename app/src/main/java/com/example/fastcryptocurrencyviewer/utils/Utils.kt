@@ -32,13 +32,6 @@ object Utils {
         USD_COIN("usd_mxn", "USD coin", R.drawable.ic_litecoin)*/
     }
 
-    data class AvailableBooksUiState(
-        val isLoading: Boolean = true,
-        val characters: List<CryptoAvailable> = emptyList(),
-        val errorMessage: String? = null,
-        val exception: Throwable? = null
-    )
-
     fun errorDialog(activity: Context, msg: String) {
         val builder = AlertDialog.Builder(activity)
         builder.setTitle("ERROR").setMessage(msg)
@@ -47,6 +40,12 @@ object Utils {
 
 }
 
+data class AvailableBooksUiState(
+    val isLoading: Boolean = true,
+    val characters: List<CryptoAvailable> = emptyList(),
+    val errorMessage: String? = null,
+    val exception: Throwable? = null
+)
 sealed class Resource<T>(val data: T? = null, val uiText: String? = null) {
     class Success<T>(data: T?) : Resource<T>(data)
     class Error<T>(uiText: String, data: T? = null) : Resource<T>(data, uiText)
