@@ -17,6 +17,8 @@
     <string name="last_price">Last price</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="max_amount">Max Amount</string>
+    <string name="min_amount">Min Amount</string>
 
 
 </resources>

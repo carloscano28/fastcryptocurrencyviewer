@@ -1,28 +1,45 @@
 package com.example.fastcryptocurrencyviewer.ui.viewmodel
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.fastcryptocurrencyviewer.domain.AvailableBooksUseCase
 import com.example.fastcryptocurrencyviewer.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class AvailableBooksVM @Inject constructor(private val availableBooksUseCase: AvailableBooksUseCase):ViewModel() {
 
-    private val _stateAvailable = MutableStateFlow(Utils.AvailableBooksUiState(isLoading = true))
-    val state: StateFlow<Utils.AvailableBooksUiState> = _stateAvailable
+    private val _stateAvailable = MutableStateFlow(AvailableBooksUiState(isLoading = true))
+    val state: StateFlow<AvailableBooksUiState> = _stateAvailable
+
 
     fun getAvailableBookInvoke(){
         viewModelScope.launch {
-            val result = availableBooksUseCase.invoke()
-            _stateAvailable.update {
-                Utils.AvailableBooksUiState(isLoading = false, characters = result )
-            }
+            val result = availableBooksUseCase()
+            result.onEach { crypto ->
+                when(crypto){
+                    is Resource.Loading -> {
+                        _stateAvailable.update {
+                            it.copy(isLoading = true)
+                        }
+                    }
+                    is Resource.Success -> {
+                        _stateAvailable.update {
+                            it.copy(
+                                isLoading = false,
+                                characters = crypto.data!!
+                            )
+                        }
+                    }
+                    is Resource.Error -> {
+                        _stateAvailable.update {
+                            it.copy(isLoading = false, errorMessage = crypto.uiText  )
+                        }
+                    }
+                }
+            }.launchIn(viewModelScope)
         }
     }
 }

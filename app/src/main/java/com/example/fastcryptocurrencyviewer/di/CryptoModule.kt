@@ -38,7 +38,7 @@ abstract class CryptoModule {
         fun providesRetrofitInstance (okHttpClient:OkHttpClient) : Retrofit = Retrofit.Builder()
             .client(okHttpClient)
             .baseUrl(Utils.CryptoConstants.BITSO_URL)
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create()) // Para Rx java
             .addConverterFactory(GsonConverterFactory.create())
             //.addConverterFactory(MoshiConverterFactory.create())
             .build()

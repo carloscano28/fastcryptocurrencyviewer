@@ -1,7 +1,7 @@
 package com.example.fastcryptocurrencyviewer.data.repository
 
-import com.example.fastcryptocurrencyviewer.data.model.CryptoAvailableResponse
+import com.example.fastcryptocurrencyviewer.data.model.CryptoM
 
 interface AvailableBooksRepo {
-    suspend fun loadAvailableBooks(): CryptoAvailableResponse
+    suspend fun loadAvailableBooks(): List<CryptoM>
 }
